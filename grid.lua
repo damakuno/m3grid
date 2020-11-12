@@ -35,9 +35,11 @@ function Grid:checkMatch()
     local rowCounts = {}
     for i, row in ipairs(grid) do
 	print("\n")
-	prevRows[i] = 0
-	rowCounts[i] = 0
         for j, col in ipairs(row) do
+	if prevRows[j] == nil then
+	    prevRows[j] = 0
+            rowCounts[j] = 0
+    end
 	    if col ~= prevCol then
 	        colCount = 1
 	    else 
