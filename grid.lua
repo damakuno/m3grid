@@ -31,16 +31,20 @@ function Grid:checkMatch()
     local grid = self.grid
     local prevCol = 0
     local colCount = 0
+    local prevRows = {}
+    local rowCounts = {}
     for i, row in ipairs(grid) do
 	print("\n")
+	prevRows[i] = 0
+	rowCounts[i] = 0
         for j, col in ipairs(row) do
 	    if col ~= prevCol then
-		   colCount = 1
-	    else
-		    colCount = colCount + 1
-        end
-	prevCol = col
-	print(col, colCount)
+	        colCount = 1
+	    else 
+		colCount = colCount + 1
+            end
+            prevCol = col
+	    print(col, colCount)
 	end
     end
 end
