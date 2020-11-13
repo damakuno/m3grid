@@ -32,6 +32,8 @@ function Grid:draw()
 end
 
 function Grid:checkMatch()
+    local vMatches = {}
+    local hMatches = {}
     local grid = self.grid
     local prevCol = 0
     local colCount = 0
@@ -56,10 +58,20 @@ function Grid:checkMatch()
                 rowCounts[j] = 1
             else
                 rowCounts[j] = rowCounts[j] + 1
+		if rowCounts[j] >= 3 then
+		    for k = 1, rowCounts[j] do
+	               table.insert(vMatches, {j,i-k+1}) 
+		    end
+		end
+
             end
             prevRows[j] = col
-            print(col, rowCounts[j])
+            -- print(col, rowCounts[j])
         end
+
+	for i, match in ipairs(vMatches) do
+	    print(match[1], match[2])
+	end
     end
 end
 
