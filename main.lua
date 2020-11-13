@@ -13,7 +13,7 @@ newGrid = {
 grid = Grid:new(newGrid)
 grid:fill()
 grid:show()
-local hMatches, vMatches = grid:checkMatch()
+hMatches, vMatches = grid:checkMatch()
 print("Horizontal Matches")
 for i, match in ipairs(hMatches) do
     print(match[1], match[2])
@@ -25,3 +25,13 @@ for i, match in ipairs(vMatches) do
 end
 grid:swap(1, 1)
 grid:show()
+hMatches, vMatches = grid:checkMatch()
+print("Horizontal Matches")
+for i, match in ipairs(hMatches) do
+    print(match[1], match[2])
+end
+
+print("Vertical Matches")
+for i, match in ipairs(vMatches) do
+    print(match[1], match[2])
+end
