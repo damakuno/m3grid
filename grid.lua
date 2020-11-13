@@ -38,7 +38,6 @@ function Grid:checkMatch()
     local grid = self.grid
     local prevRows = {}
     local rowCounts = {}
-    print("\n")
     for i, row in ipairs(grid) do
         local prevCol = 0
         local colCount = 0
@@ -75,15 +74,7 @@ function Grid:checkMatch()
         end
     end
 
-    print("Horizontal Matches")
-    for i, match in ipairs(hMatches) do
-        print(match[1], match[2])
-    end
-
-    print("Vertical Matches")
-    for i, match in ipairs(vMatches) do
-        print(match[1], match[2])
-    end
+    return hMatches, vMatches
 end
 
 function randomInt(start, length)
