@@ -38,8 +38,14 @@ function Grid:fill()
         else
             hasMatches = false
         end
-        print(#h, #v)
     until (hasMatches == false)
+end
+
+function Grid:swap(x, y)
+    self.grid[y][x], self.grid[y][x + 1] = self.grid[y][x + 1], self.grid[y][x]
+end
+
+function Grid:show()
     for i, row in ipairs(self.grid) do
         local rowVals = ""
         for j, col in ipairs(row) do
