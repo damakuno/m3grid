@@ -12,6 +12,7 @@ function Grid:new(grid, object)
         math.random()
     end
 
+    print("\n")
     for i, row in ipairs(object.grid) do
         local rowVals = ""
         for j, col in ipairs(row) do
@@ -35,12 +36,12 @@ function Grid:checkMatch()
     local vMatches = {}
     local hMatches = {}
     local grid = self.grid
-    local prevCol = 0
-    local colCount = 0
     local prevRows = {}
     local rowCounts = {}
+    print("\n")
     for i, row in ipairs(grid) do
-        print("\n")
+        local prevCol = 0
+        local colCount = 0
         for j, col in ipairs(row) do
             if prevRows[j] == nil then
                 prevRows[j] = 0
@@ -50,28 +51,38 @@ function Grid:checkMatch()
                 colCount = 1
             else
                 colCount = colCount + 1
+                if colCount >= 3 then
+                    for h = 1, colCount do
+                        table.insert(hMatches, {j - h + 1, i})
+                    end
+                end
             end
             prevCol = col
             -- print(col, colCount)
-            
+
             if col ~= prevRows[j] then
                 rowCounts[j] = 1
             else
                 rowCounts[j] = rowCounts[j] + 1
-		if rowCounts[j] >= 3 then
-		    for k = 1, rowCounts[j] do
-	               table.insert(vMatches, {j,i-k+1}) 
-		    end
-		end
-
+                if rowCounts[j] >= 3 then
+                    for k = 1, rowCounts[j] do
+                        table.insert(vMatches, {j, i - k + 1})
+                    end
+                end
             end
             prevRows[j] = col
             -- print(col, rowCounts[j])
         end
+    end
 
-	for i, match in ipairs(vMatches) do
-	    print(match[1], match[2])
-	end
+    print("Horizontal Matches")
+    for i, match in ipairs(hMatches) do
+        print(match[1], match[2])
+    end
+
+    print("Vertical Matches")
+    for i, match in ipairs(vMatches) do
+        print(match[1], match[2])
     end
 end
 
