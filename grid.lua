@@ -12,15 +12,6 @@ function Grid:new(grid, object)
         math.random()
     end
 
-    print("\n")
-    for i, row in ipairs(object.grid) do
-        local rowVals = ""
-        for j, col in ipairs(row) do
-            object.grid[i][j] = randomInt(1, 5)
-            rowVals = rowVals .. object.grid[i][j]
-        end
-        print(rowVals)
-    end
     setmetatable(object, self)
     self.__index = self
     return object
@@ -30,6 +21,32 @@ function Grid:update(dt)
 end
 
 function Grid:draw()
+end
+
+function Grid:fill()
+    print("\n")
+    local hasMatches = false
+    repeat
+        for i, row in ipairs(self.grid) do
+            for j, col in ipairs(row) do
+                self.grid[i][j] = randomInt(1, 5)
+            end
+        end
+        h, v = self:checkMatch(self.grid)
+        if (#h > 0 or #v > 0) then
+            hasMatches = true
+        else
+            hasMatches = false
+        end
+        print(#h, #v)
+    until (hasMatches == false)
+    for i, row in ipairs(self.grid) do
+        local rowVals = ""
+        for j, col in ipairs(row) do
+            rowVals = rowVals .. self.grid[i][j]
+        end
+        print(rowVals)
+    end
 end
 
 function Grid:checkMatch()
