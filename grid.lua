@@ -1,10 +1,13 @@
 local Grid = {}
 
-function Grid:new(grid, object)
+function Grid:new(grid, spawnTable, object)
     object =
         object or
         {
-            grid = grid
+            grid = grid,
+            spawnTable = spawnTable,
+            spawnRates = {},
+            spawnRateCount = 0
         }
 
     math.randomseed(os.clock() * 100000000000)
@@ -12,6 +15,14 @@ function Grid:new(grid, object)
         math.random()
     end
 
+    for i, spawnRate in ipairs(object.spawnTable) do
+        for j = 1, spawnRate do                
+            table.insert(object.spawnRates, i)
+            object.spawnRateCount = object.spawnRateCount + 1
+        end
+    end
+
+    
     setmetatable(object, self)
     self.__index = self
     return object
@@ -29,7 +40,7 @@ function Grid:fill()
     repeat
         for i, row in ipairs(self.grid) do
             for j, col in ipairs(row) do
-                self.grid[i][j] = randomInt(1, 5)
+                self.grid[i][j] = self:spawnTile()
             end
         end
         h, v = self:checkMatch(self.grid)
@@ -98,6 +109,10 @@ function Grid:checkMatch()
     end
 
     return hMatches, vMatches
+end
+
+function Grid:spawnTile()
+    return self.spawnRates[randomInt(1, self.spawnRateCount)]
 end
 
 function randomInt(start, length)
